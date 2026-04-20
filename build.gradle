@@ -140,10 +140,6 @@ dependencies {
     compileOnly("zlib:voxy_slim:1")
     implementation "curse.maven:ecliptic-seasons-1118306:7956564"
 
-    compileOnly "curse.maven:modern-ui-352491:6956436"
-//    onlyMainRuntimeOnly "curse.maven:modern-ui-352491:6956436"
-//    onlyMainRuntimeOnly "curse.maven:simply-improved-terrain-472872:6112229"
-    // others
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'

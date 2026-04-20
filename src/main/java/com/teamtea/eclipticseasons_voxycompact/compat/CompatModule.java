@@ -2,7 +2,6 @@ package com.teamtea.eclipticseasons_voxycompact.compat;
 
 
 import com.teamtea.eclipticseasons.compat.Platform;
-import lombok.Getter;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.loading.FMLLoader;
@@ -10,25 +9,14 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 
 public class CompatModule {
-
-    private static boolean ctm = false;
-    private static boolean continuity = false;
-    @Getter
-    private static boolean fabric_renderer_indigo = false;
-    @Getter
-    private static boolean sodium = false;
-    @Getter
-    private static boolean iris = false;
-    @Getter
-    private static boolean modernui = false;
-    @Getter
-    private static boolean distanthorizons = false;
-
-    @Getter
     private static boolean voxy = false;
     //@Getter
     //private static boolean voxyTest = false;
 
+
+    public static boolean isVoxy() {
+        return voxy;
+    }
 
     /**
      * Used for mod init detect.
