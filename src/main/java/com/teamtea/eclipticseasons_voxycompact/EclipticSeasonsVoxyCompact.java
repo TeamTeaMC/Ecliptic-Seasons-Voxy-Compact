@@ -14,12 +14,10 @@ import net.minecraftforge.fml.config.ModConfig;
 public class EclipticSeasonsVoxyCompact {
     public static final String MODID = "eclipticseasons_voxycompact";
 
-    public EclipticSeasonsVoxyCompact(IEventBus modEventBus, ModContainer modContainer) {
+    public EclipticSeasonsVoxyCompact() {
         CompatModule.init();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ESVoxyCompactConfig.COMMON_CONFIG);
-
-
     }
 
 

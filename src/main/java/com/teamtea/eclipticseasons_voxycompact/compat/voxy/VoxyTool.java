@@ -3,7 +3,7 @@ package com.teamtea.eclipticseasons_voxycompact.compat.voxy;
 import com.teamtea.eclipticseasons.api.EclipticSeasonsApi;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
 import com.teamtea.eclipticseasons.common.core.map.MapChecker;
-import com.teamtea.eclipticseasons.compat.CompatModule;
+import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyAboveLightingSupplier;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyLevelProvider;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.VoxyESImportManager;
