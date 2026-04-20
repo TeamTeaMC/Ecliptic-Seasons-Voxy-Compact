@@ -23,8 +23,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 @Mixin({VoxelIngestService.class})
 public abstract class MixinVoxelIngestService {
 
-
-    @Shadow
+    @Shadow(remap = false)
     @Final
     private static ThreadLocal<VoxelizedSection> SECTION_CACHE;
 
@@ -50,8 +49,11 @@ public abstract class MixinVoxelIngestService {
     private void eclipticseasons$processJob_in(
             CallbackInfo ci,
             @Share("voxy_level_provider") LocalRef<IVoxyLevelProvider> iVoxyLevelProviderLocalRef) {
-        if (VoxyTool.isVoxyTest() && iVoxyLevelProviderLocalRef.get() instanceof IVoxyLevelProvider iVoxyLevelProvider) {
-            ((IVoxyLevelProvider) SECTION_CACHE.get()).setLevelReference(iVoxyLevelProvider.getLevelBind());
+        if (VoxyTool.isVoxyTest()) {
+            IVoxyLevelProvider iVoxyLevelProvider1 = iVoxyLevelProviderLocalRef.get();
+            if (iVoxyLevelProvider1 != null) {
+                ((IVoxyLevelProvider) SECTION_CACHE.get()).setLevelReference(iVoxyLevelProvider1.getLevelBind());
+            }
         }
     }
 

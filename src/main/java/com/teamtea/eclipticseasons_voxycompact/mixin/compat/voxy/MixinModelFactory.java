@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
-import com.teamtea.eclipticseasons_voxycompact.EclipticSeasonsVoxyCompact;
+import com.teamtea.eclipticseasons.EclipticSeasons;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelController;
 import me.cortex.voxy.client.core.model.ModelFactory;
@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 
 @Mixin({ModelFactory.class})
 public abstract class MixinModelFactory {
+
 
     @Shadow(remap = false)
     @Final
@@ -85,7 +86,7 @@ public abstract class MixinModelFactory {
                     }
                 });
             } catch (Exception e) {
-                e.printStackTrace();
+                EclipticSeasons.logger(e);
             }
         }
 

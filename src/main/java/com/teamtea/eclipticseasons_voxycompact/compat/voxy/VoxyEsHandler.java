@@ -1,10 +1,10 @@
 package com.teamtea.eclipticseasons_voxycompact.compat.voxy;
 
 import com.teamtea.eclipticseasons.api.event.SolarTermChangeEvent;
-import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
+import com.teamtea.eclipticseasons.compat.CompatModule;
 import me.cortex.voxy.client.core.IGetVoxyRenderSystem;
 import net.minecraft.client.Minecraft;
-import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class VoxyEsHandler {
 
@@ -20,7 +20,7 @@ public class VoxyEsHandler {
                 levelRenderer.voxy$shutdownRenderer();
                 levelRenderer.voxy$createRenderer();
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }

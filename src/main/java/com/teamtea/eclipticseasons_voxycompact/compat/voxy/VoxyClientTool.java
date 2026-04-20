@@ -4,6 +4,7 @@ import com.teamtea.eclipticseasons.client.core.ExtraModelManager;
 import com.teamtea.eclipticseasons.client.core.ExtraRendererContext;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
 import com.teamtea.eclipticseasons.common.core.map.MapChecker;
+import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -17,11 +18,9 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
 
-import java.util.List;
-
 public class VoxyClientTool {
 
-    public static void renderToStream(BlockState state, RenderType layer, ReuseVertexConsumer translucentVC, ReuseVertexConsumer opaqueVC) {
+    public static void renderToStream(BlockState state, RenderType renderType, ReuseVertexConsumer opaqueVC, ReuseVertexConsumer translucentVC) {
         if (!VoxyTool.isVoxyTest()) return;
 
         if (state.getRenderShape() != RenderShape.INVISIBLE) {
@@ -36,22 +35,21 @@ public class VoxyClientTool {
                     .setOriginalModel(Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(state))
             ;
 
-            RenderType type = state.getBlock() instanceof LeavesBlock ?
-                    layer :
-                    ExtraModelManager.getRenderType(state);
+            RenderType layer = (state.getBlock() instanceof LeavesBlock ?
+                    renderType :
+                    ExtraModelManager.getRenderType(state));
             for (Direction direction : new Direction[]{Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, null}) {
+                // int SNOW_FLAG = 1 << 30;
 
                 for (BakedQuad quad :
                         ExtraModelManager.cancelTop(context, model, ClientCon.getUseLevel(),
                                 state, BlockPos.ZERO, direction,
                                 ClientCon.getUseLevel().getRandom(), 42L,
-                                model.getQuads(state, direction, new SingleThreadedRandomSource(42L)),
-                                List.of())) {
-                    (type == RenderType.translucent() ? translucentVC : opaqueVC).quad(quad, state.is(BlockTags.LEAVES), layer);
+                                model.getQuads(state, direction, new SingleThreadedRandomSource(42L)))) {
+                    (layer == RenderType.translucent() ? translucentVC : opaqueVC)
+                            .quad(quad, state.is(BlockTags.LEAVES), layer);
                 }
             }
         }
     }
-
-
 }

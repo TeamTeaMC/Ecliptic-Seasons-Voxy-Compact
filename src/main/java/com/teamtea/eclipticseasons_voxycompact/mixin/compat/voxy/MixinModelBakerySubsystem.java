@@ -1,37 +1,25 @@
 package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy;
 
-import com.llamalad7.mixinextras.expression.Definition;
-import com.llamalad7.mixinextras.expression.Expression;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import me.cortex.voxy.client.core.model.ModelBakerySubsystem;
-import me.cortex.voxy.common.world.other.Mapper;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin({ModelBakerySubsystem.class})
 public abstract class MixinModelBakerySubsystem {
 
-
-    @Shadow(remap = false)
-    @Final
-    private Mapper mapper;
-
-    @Definition(id = "mapper", field = "Lme/cortex/voxy/client/core/model/ModelBakerySubsystem;mapper:Lme/cortex/voxy/common/world/other/Mapper;")
-    @Definition(id = "getBlockStateCount", method = "Lme/cortex/voxy/common/world/other/Mapper;getBlockStateCount()I")
-    @Expression("this.mapper.getBlockStateCount()<=?")
-    @WrapOperation(
+    @ModifyExpressionValue(
             remap = false,
             method = "requestBlockBake",
-            at = @At(value = "MIXINEXTRAS:EXPRESSION")
+            at = @At(value = "INVOKE", target = "Lme/cortex/voxy/common/world/other/Mapper;getBlockStateCount()I")
     )
-    private boolean eclipticseasons$requestBlockBake(int left, int right,
-                                                     Operation<Boolean> original, @Local(argsOnly = true) int blockId) {
-        return original.call(left,VoxyTool.fixId(mapper,right));
+    private int eclipticseasons$requestBlockBake(int original, @Local(argsOnly = true) int blockId) {
+        if (original <= blockId && VoxyTool.isVoxyTest()) {
+            original = blockId + 1;
+        }
+        return original;
     }
 
 

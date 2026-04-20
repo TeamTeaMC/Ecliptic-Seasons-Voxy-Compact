@@ -3,17 +3,18 @@ package com.teamtea.eclipticseasons_voxycompact.compat.voxy;
 import com.teamtea.eclipticseasons.api.EclipticSeasonsApi;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
 import com.teamtea.eclipticseasons.common.core.map.MapChecker;
-import com.teamtea.eclipticseasons.config.CommonConfig;
-import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
+import com.teamtea.eclipticseasons.compat.CompatModule;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyAboveLightingSupplier;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyLevelProvider;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.VoxyESImportManager;
+import com.teamtea.eclipticseasons.config.CommonConfig;
 import me.cortex.voxy.common.voxelization.ILightingSupplier;
 import me.cortex.voxy.common.voxelization.VoxelizedSection;
 import me.cortex.voxy.common.world.WorldEngine;
 import me.cortex.voxy.common.world.WorldSection;
 import me.cortex.voxy.common.world.other.Mapper;
 import me.cortex.voxy.commonImpl.ImportManager;
+import me.cortex.voxy.commonImpl.VoxyCommon;
 import me.cortex.voxy.commonImpl.VoxyInstance;
 import me.cortex.voxy.commonImpl.WorldIdentifier;
 import me.cortex.voxy.commonImpl.importers.WorldImporter;
@@ -65,7 +66,7 @@ public class VoxyTool {
                     int skyLight = (supply & 0xFF) & 0x0F;
                     if (skyLight > 9 &&
                             (!CommonConfig.Snow.notSnowyNearGlowingBlock.get() ||
-                                    (((supply & 0xFF) >> 4) & 0x0F) < CommonConfig.Snow.notSnowyNearGlowingBlockLevel.getAsInt())) {
+                                    (((supply & 0xFF) >> 4) & 0x0F) < CommonConfig.Snow.notSnowyNearGlowingBlockLevel.get())) {
                         BlockState aboveState = supplier.getBlockState(i & 15, (i >> 8 & 15) + 1, i >> 4 & 15);
                         boolean isLight = true;
                         int flag = MapChecker.getDefaultBlockTypeFlag(state);
@@ -84,7 +85,7 @@ public class VoxyTool {
                         }
                         if (isLight) {
                             String biome = stateMapper.getBiomeEntries()[biomeId].biome;
-                            var holderKey = ResourceKey.create(Registries.BIOME, ResourceLocation.parse(biome));
+                            var holderKey = ResourceKey.create(Registries.BIOME, new ResourceLocation(biome));
                             Holder<Biome> holder = level.registryAccess().registryOrThrow(Registries.BIOME).getHolderOrThrow(holderKey);
                             if (MapChecker.shouldSnowAtBiome(level, holder.value(), state, level.getRandom(), state.getSeed(offset), offset)) {
                                 blockId = maxBlockId - blockId;
@@ -128,7 +129,7 @@ public class VoxyTool {
     }
 
     public static int getSkyLightFromBlockId(long blockId) {
-        // return (Mapper.getLightId(blockId) & 0xFF) & 0x0F;
+        //return (Mapper.getLightId(blockId) & 0xFF) & 0x0F;
         return (Mapper.getLightId(blockId) % 16);
     }
 
@@ -143,12 +144,6 @@ public class VoxyTool {
     }
 
 
-    public static ImportManager esImporter;
-
-    public static void releaseImporter() {
-        VoxyTool.esImporter = null;
-    }
-
     public static void tryUpdate() {
         if (!isVoxyTest()) return;
         if (!CompatModule.CommonConfig.voxyLODAutoReload.get()) return;
@@ -156,10 +151,12 @@ public class VoxyTool {
         Level level = ClientCon.getUseLevel();
         if (level == null || level.getGameTime() % (20 * 15) == 0
                 || !ClientCon.getAgent().isSnowChange()
-                // || !MapChecker.isValidDimension(level)
                 || esImporter != null)
             return;
 
+        //if (!(getVoxyInstance() instanceof VoxyClientInstance instance)) {
+        //    return;
+        //}
         VoxyInstance instance = getVoxyInstance();
         if (instance == null) return;
 
@@ -169,15 +166,6 @@ public class VoxyTool {
         ClientCon.agent.setSnowChange(false);
 
         esImporter = new VoxyESImportManager();
-
-        // MixinAccessorModelFactory factory = (MixinAccessorModelFactory) ((MixinAccessorVoxyRenderSystem) ((IGetVoxyRenderSystem)
-        //        Minecraft.getInstance().levelRenderer)
-        //        .getVoxyRenderSystem()).getModelBakerySubsystem()
-        //        .factory;
-        //
-        // Arrays.fill(factory.getIdMappings(), -1);
-        // factory.getModelTexture2id().clear();
-
 
         esImporter.makeAndRunIfNone(engine, () -> {
             var importer = new WorldImporter(engine, level, instance.getServiceManager(), instance.savingServiceRateLimiter);
@@ -191,13 +179,20 @@ public class VoxyTool {
         });
     }
 
+    private static ImportManager esImporter;
+
+    public static void releaseImporter() {
+        VoxyTool.esImporter = null;
+    }
+
     private static @Nullable VoxyInstance getVoxyInstance() {
         VoxyInstance instance = null;
+
         try {
             Class<?> clazz = Class.forName("me.cortex.voxy.commonImpl.VoxyCommon");
             Method method = clazz.getDeclaredMethod("getInstance");
             instance = (VoxyInstance) method.invoke(null);
-        } catch (Exception ignored) {
+        } catch (Exception i) {
         }
         return instance;
     }

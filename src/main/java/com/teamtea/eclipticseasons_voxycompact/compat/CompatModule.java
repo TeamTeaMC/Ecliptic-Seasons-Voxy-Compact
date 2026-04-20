@@ -2,10 +2,10 @@ package com.teamtea.eclipticseasons_voxycompact.compat;
 
 
 import com.teamtea.eclipticseasons.compat.Platform;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.loading.FMLLoader;
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 
 public class CompatModule {
@@ -41,11 +41,11 @@ public class CompatModule {
 
 
     public static class CommonConfig {
-        public static ModConfigSpec.BooleanValue voxyTest;
-        public static ModConfigSpec.BooleanValue voxyLODAutoReload;
-        public static ModConfigSpec.BooleanValue voxyReloadWhenSeasonChanged;
+        public static ForgeConfigSpec.BooleanValue voxyTest;
+        public static ForgeConfigSpec.BooleanValue voxyLODAutoReload;
+        public static ForgeConfigSpec.BooleanValue voxyReloadWhenSeasonChanged;
 
-        public static void load(ModConfigSpec.Builder builder) {
+        public static void load(ForgeConfigSpec.Builder builder) {
             builder.push("Compat");
             if (isVoxy()) {
                 voxyTest = builder

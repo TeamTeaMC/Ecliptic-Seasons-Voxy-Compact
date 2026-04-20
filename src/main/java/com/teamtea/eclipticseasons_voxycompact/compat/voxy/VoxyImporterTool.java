@@ -2,6 +2,7 @@ package com.teamtea.eclipticseasons_voxycompact.compat.voxy;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyAboveLightingSupplier;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.VoxyPairCompoundTag;
 import me.cortex.voxy.common.voxelization.ILightingSupplier;
@@ -23,7 +24,7 @@ public class VoxyImporterTool {
             Codec<PalettedContainerRO<Holder<Biome>>> biomeCodec,
             PalettedContainerRO<Holder<Biome>> defaultBiomeProvider,
             PalettedContainer<BlockState> blockContainer, PalettedContainerRO<Holder<Biome>> biomeContainer, ILightingSupplier lightSupplier, CompoundTag above) {
-        if (!VoxyTool.isVoxyTest()) return lightSupplier;
+        if (!com.teamtea.eclipticseasons.compat.voxy.VoxyTool.isVoxyTest()) return lightSupplier;
         if (above == null) return lightSupplier;
 
         byte[] blockLightData = above.getByteArray("BlockLight");
@@ -43,8 +44,8 @@ public class VoxyImporterTool {
         LevelChunkSection levelChunkSection = null;
         if (!above.getCompound("block_states").isEmpty()) {
             DataResult<PalettedContainer<BlockState>> blockStatesRes = blockStateCodec.parse(NbtOps.INSTANCE, above.getCompound("block_states"));
-            if (blockStatesRes.hasResultOrPartial()) {
-                PalettedContainer<BlockState> blockStates = blockStatesRes.getPartialOrThrow();
+            if (blockStatesRes.result().isPresent()) {
+                PalettedContainer<BlockState> blockStates = blockStatesRes.result().get();
                 PalettedContainerRO<Holder<Biome>> biomes = defaultBiomeProvider;
                 CompoundTag optBiomes = above.getCompound("biomes");
                 if (!optBiomes.isEmpty()) {

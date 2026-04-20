@@ -75,7 +75,7 @@ public class MixinWorldImporter {
 
 
     @WrapOperation(
-            //remap = false,
+            remap = false,
             method = "importSectionNBT",
             at = @At(value = "INVOKE", target = "Lme/cortex/voxy/common/voxelization/WorldConversionFactory;convert(Lme/cortex/voxy/common/voxelization/VoxelizedSection;Lme/cortex/voxy/common/world/other/Mapper;Lnet/minecraft/world/level/chunk/PalettedContainer;Lnet/minecraft/world/level/chunk/PalettedContainerRO;Lme/cortex/voxy/common/voxelization/ILightingSupplier;)Lme/cortex/voxy/common/voxelization/VoxelizedSection;")
     )

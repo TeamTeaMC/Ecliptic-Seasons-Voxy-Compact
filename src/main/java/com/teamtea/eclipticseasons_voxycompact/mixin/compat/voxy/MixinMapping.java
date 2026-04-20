@@ -29,5 +29,4 @@ public abstract class MixinMapping {
     private <K> K eclipticseasons$getBlockStateFromBlockId_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
         return original.call(instance, VoxyTool.fixId((Mapper) (Object) this, index));
     }
-
 }
