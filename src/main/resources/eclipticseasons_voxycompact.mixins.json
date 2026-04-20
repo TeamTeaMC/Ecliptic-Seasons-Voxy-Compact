@@ -4,13 +4,13 @@
   "refmap": "eclipticseasons_voxycompact.refmap.json",
   "mixins": [
     "compat.voxy.MixinIngestSection",
+    "compat.voxy.MixinIngestSection2",
     "compat.voxy.MixinMapping",
     "compat.voxy.MixinModelBakerySubsystem",
     "compat.voxy.MixinModelFactory",
     "compat.voxy.MixinVoxelIngestService",
     "compat.voxy.MixinWorldConversionFactory",
-    "compat.voxy.MixinWorldImporter",
-    "compat.voxy.MixinWorldUpdater"
+    "compat.voxy.MixinWorldImporter"
   ],
   "client": [
     "compat.voxy.MixinClientLevel",

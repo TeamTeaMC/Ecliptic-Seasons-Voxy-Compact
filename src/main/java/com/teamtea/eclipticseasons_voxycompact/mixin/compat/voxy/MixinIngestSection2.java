@@ -11,15 +11,15 @@ import java.lang.ref.WeakReference;
 public abstract class MixinIngestSection2 implements IVoxyLevelProvider {
 
     @Unique
-    WeakReference<Level> eclipticseasons$level = new WeakReference<>(null);
+    WeakReference<Level> es_voxycompact$level = new WeakReference<>(null);
 
     @Override
     public void setLevelReference(Level levelReference) {
-        this.eclipticseasons$level = new WeakReference<>(levelReference);
+        this.es_voxycompact$level = new WeakReference<>(levelReference);
     }
 
     @Override
     public WeakReference<Level> getLevelReference() {
-        return eclipticseasons$level;
+        return es_voxycompact$level;
     }
 }

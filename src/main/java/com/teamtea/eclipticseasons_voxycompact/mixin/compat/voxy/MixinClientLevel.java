@@ -15,7 +15,7 @@ import java.util.function.BooleanSupplier;
 public abstract class MixinClientLevel  {
 
     @Inject(at = {@At("HEAD")}, method = {"tick"})
-    public void eclipticseasons$tick_refresh_voxy(BooleanSupplier pHasTimeLeft, CallbackInfo ci) {
+    public void es_voxycompact$tick_refresh_voxy(BooleanSupplier pHasTimeLeft, CallbackInfo ci) {
         VoxyTool.tryUpdate();
     }
 }

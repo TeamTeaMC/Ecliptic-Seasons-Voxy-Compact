@@ -19,7 +19,7 @@ public abstract class MixinWorldConversionFactory {
             method = "convert(Lme/cortex/voxy/common/voxelization/VoxelizedSection;Lme/cortex/voxy/common/world/other/Mapper;Lnet/minecraft/world/level/chunk/PalettedContainer;Lnet/minecraft/world/level/chunk/PalettedContainerRO;Lme/cortex/voxy/common/voxelization/ILightingSupplier;ZJ)Lme/cortex/voxy/common/voxelization/VoxelizedSection;",
             at = @At(value = "INVOKE", target = "Lme/cortex/voxy/common/world/other/Mapper;composeMappingId(BII)J")
     )
-    private static long eclipticseasons$convert(
+    private static long es_voxycompact$convert(
             byte light, int blockId, int biomeId, Operation<Long> original,
             @Local(argsOnly = true) Mapper mapper,
             @Local(argsOnly = true) ILightingSupplier lightSupplier,

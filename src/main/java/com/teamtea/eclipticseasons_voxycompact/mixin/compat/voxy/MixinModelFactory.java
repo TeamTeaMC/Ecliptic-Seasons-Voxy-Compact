@@ -38,7 +38,7 @@ public abstract class MixinModelFactory {
             method = "addEntry",
             at = @At(value = "INVOKE", target = "Lme/cortex/voxy/common/world/other/Mapper;getBlockStateFromBlockId(I)Lnet/minecraft/world/level/block/state/BlockState;")
     )
-    private BlockState eclipticseasons$addEntry_setBS(Mapper instance, int blockId, Operation<BlockState> original) {
+    private BlockState es_voxycompact$addEntry_setBS(Mapper instance, int blockId, Operation<BlockState> original) {
         return original.call(instance, VoxyTool.fixId(instance, blockId, (i) -> {
             // if (bakery2 instanceof IVoxyModelController modelController) {
             //     modelController.setSnowyBlock(true);
@@ -51,7 +51,7 @@ public abstract class MixinModelFactory {
             method = "addEntry",
             at = @At(value = "RETURN")
     )
-    private void eclipticseasons$addEntry_clean(
+    private void es_voxycompact$addEntry_clean(
             int blockId, CallbackInfoReturnable<Boolean> cir) {
         // if (bakery2 instanceof IVoxyModelController modelController) {
         //     modelController.setSnowyBlock(false);
@@ -63,7 +63,7 @@ public abstract class MixinModelFactory {
             method = "processModelResult",
             at = @At(value = "RETURN")
     )
-    private void eclipticseasons$processModelResult_return(CallbackInfoReturnable<Boolean> cir) {
+    private void es_voxycompact$processModelResult_return(CallbackInfoReturnable<Boolean> cir) {
         if (bakery2 instanceof IVoxyModelController modelController) {
             modelController.setSnowyBlock(false);
         }
@@ -74,7 +74,7 @@ public abstract class MixinModelFactory {
             method = "processModelResult",
             at = @At(value = "INVOKE", target = "Ljava/util/concurrent/ConcurrentLinkedDeque;poll()Ljava/lang/Object;")
     )
-    private <E> E eclipticseasons$processModelResult_setBS(E original, @Share("isSnowyBlock") LocalBooleanRef ref) {
+    private <E> E es_voxycompact$processModelResult_setBS(E original, @Share("isSnowyBlock") LocalBooleanRef ref) {
         if (original != null) {
             try {
                 Method m = original.getClass().getDeclaredMethod("blockId");

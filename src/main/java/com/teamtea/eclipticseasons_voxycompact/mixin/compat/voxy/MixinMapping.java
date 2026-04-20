@@ -17,7 +17,7 @@ public abstract class MixinMapping {
             method = "getBlockStateOpacity(I)I",
             at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectArrayList;get(I)Ljava/lang/Object;")
     )
-    private <K> K eclipticseasons$getBlockStateOpacity_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
+    private <K> K es_voxycompact$getBlockStateOpacity_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
         return original.call(instance, VoxyTool.fixId((Mapper) (Object) this, index));
     }
 
@@ -26,7 +26,7 @@ public abstract class MixinMapping {
             method = "getBlockStateFromBlockId",
             at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectArrayList;get(I)Ljava/lang/Object;")
     )
-    private <K> K eclipticseasons$getBlockStateFromBlockId_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
+    private <K> K es_voxycompact$getBlockStateFromBlockId_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
         return original.call(instance, VoxyTool.fixId((Mapper) (Object) this, index));
     }
 }

@@ -32,7 +32,7 @@ public abstract class MixinVoxelIngestService {
             method = "processJob",
             at = @At(value = "INVOKE", target = "Ljava/util/concurrent/ConcurrentLinkedDeque;pop()Ljava/lang/Object;")
     )
-    private <E> E eclipticseasons$processJob(
+    private <E> E es_voxycompact$processJob(
             E original,
             @Share("voxy_level_provider") LocalRef<IVoxyLevelProvider> iVoxyLevelProviderLocalRef) {
         if (VoxyTool.isVoxyTest() && original instanceof IVoxyLevelProvider iVoxyLevelProvider) {
@@ -46,7 +46,7 @@ public abstract class MixinVoxelIngestService {
             method = "processJob",
             at = @At(value = "INVOKE", target = "Lme/cortex/voxy/common/voxelization/WorldConversionFactory;convert(Lme/cortex/voxy/common/voxelization/VoxelizedSection;Lme/cortex/voxy/common/world/other/Mapper;Lnet/minecraft/world/level/chunk/PalettedContainer;Lnet/minecraft/world/level/chunk/PalettedContainerRO;Lme/cortex/voxy/common/voxelization/ILightingSupplier;)Lme/cortex/voxy/common/voxelization/VoxelizedSection;")
     )
-    private void eclipticseasons$processJob_in(
+    private void es_voxycompact$processJob_in(
             CallbackInfo ci,
             @Share("voxy_level_provider") LocalRef<IVoxyLevelProvider> iVoxyLevelProviderLocalRef) {
         if (VoxyTool.isVoxyTest()) {
@@ -62,7 +62,7 @@ public abstract class MixinVoxelIngestService {
             method = "enqueueIngest",
             at = @At(value = "INVOKE", target = "Ljava/util/concurrent/ConcurrentLinkedDeque;add(Ljava/lang/Object;)Z")
     )
-    private <E> boolean eclipticseasons$enqueueIngest(
+    private <E> boolean es_voxycompact$enqueueIngest(
             ConcurrentLinkedDeque<E> instance, E e, Operation<Boolean> original,
             @Local(argsOnly = true) LevelChunk chunk) {
         if (VoxyTool.isVoxyTest() && e instanceof IVoxyLevelProvider levelProvider) {

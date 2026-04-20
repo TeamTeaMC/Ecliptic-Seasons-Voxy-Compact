@@ -29,7 +29,7 @@ public abstract class MixinModelTextureBakery implements IVoxyModelController {
             method = "bakeBlockModel",
             at = @At(value = "TAIL")
     )
-    private void eclipticseasons$bakeBlockModel_pre(BlockState state, RenderType layer, CallbackInfo ci, @Share("snowy_model") LocalRef<BakedModel> modelLocalRef) {
+    private void es_voxycompact$bakeBlockModel_pre(BlockState state, RenderType layer, CallbackInfo ci, @Share("snowy_model") LocalRef<BakedModel> modelLocalRef) {
         if (isSnowyBlock()) {
             VoxyClientTool.renderToStream(state, layer, opaqueVC,translucentVC);
         }
@@ -37,15 +37,15 @@ public abstract class MixinModelTextureBakery implements IVoxyModelController {
 
 
     @Unique
-    boolean eclipticseasons$snowyBlock = false;
+    boolean es_voxycompact$snowyBlock = false;
 
     @Override
     public void setSnowyBlock(boolean snowyBlock) {
-        this.eclipticseasons$snowyBlock = snowyBlock;
+        this.es_voxycompact$snowyBlock = snowyBlock;
     }
 
     @Override
     public boolean isSnowyBlock() {
-        return eclipticseasons$snowyBlock;
+        return es_voxycompact$snowyBlock;
     }
 }

@@ -30,7 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinWorldImporter {
 
     //@Unique
-    //private static CompoundTag eclipticseasons$above = null;
+    //private static CompoundTag es_voxycompact$above = null;
 
     @Shadow(remap = false)
     @Final
@@ -50,7 +50,7 @@ public class MixinWorldImporter {
             method = "importChunkNBT",
             at = @At(value = "INVOKE", target = "Lme/cortex/voxy/commonImpl/importers/WorldImporter;importSectionNBT(IIILnet/minecraft/nbt/CompoundTag;)V")
     )
-    private void eclipticseasons$importChunkNBT(
+    private void es_voxycompact$importChunkNBT(
             WorldImporter instance,
             int x, int y, int z,
             CompoundTag compoundTag, Operation<Void> original,
@@ -63,7 +63,7 @@ public class MixinWorldImporter {
             method = "importSectionNBT",
             at = @At(value = "HEAD")
     )
-    private void eclipticseasons$importSectionNBT_init(
+    private void es_voxycompact$importSectionNBT_init(
             int x, int y, int z, CompoundTag section, CallbackInfo ci,
             @Local(argsOnly = true) LocalRef<CompoundTag> sectionRef,
             @Share("above") LocalRef<CompoundTag> aboveRef) {
@@ -79,7 +79,7 @@ public class MixinWorldImporter {
             method = "importSectionNBT",
             at = @At(value = "INVOKE", target = "Lme/cortex/voxy/common/voxelization/WorldConversionFactory;convert(Lme/cortex/voxy/common/voxelization/VoxelizedSection;Lme/cortex/voxy/common/world/other/Mapper;Lnet/minecraft/world/level/chunk/PalettedContainer;Lnet/minecraft/world/level/chunk/PalettedContainerRO;Lme/cortex/voxy/common/voxelization/ILightingSupplier;)Lme/cortex/voxy/common/voxelization/VoxelizedSection;")
     )
-    private VoxelizedSection eclipticseasons$importSectionNBT_set(
+    private VoxelizedSection es_voxycompact$importSectionNBT_set(
             VoxelizedSection section,
             Mapper stateMapper,
             PalettedContainer<BlockState> blockContainer,
