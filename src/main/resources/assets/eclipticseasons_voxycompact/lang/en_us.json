@@ -1,0 +1,5 @@
+{
+  "EclipticSeasonsVoxyCompact.configuration.VoxyTest": "Voxy Compatibility Test",
+  "EclipticSeasonsVoxyCompact.configuration.VoxyLODAutoReload": "Voxy LOD Auto Reload",
+  "EclipticSeasonsVoxyCompact.configuration.VoxyReloadWhenSeasonChanged": "Voxy Cache Reload When Season Changed"
+}
