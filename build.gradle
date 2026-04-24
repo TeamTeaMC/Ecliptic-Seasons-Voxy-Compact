@@ -136,8 +136,8 @@ dependencies {
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
 
-//    compileOnly("zlib:voxy:0.2.14-alpha_mapped_moj_1.21.1")
-    compileOnly("zlib:voxy_slim:1")
+    compileOnly("zlib:voxy:0.2.14-alpha_mapped_moj_1.21.1")
+//    compileOnly("zlib:voxy_slim:1")
     implementation "curse.maven:ecliptic-seasons-1118306:7956564"
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
