@@ -39,12 +39,12 @@ public class VoxyClientTool {
                     ExtraModelManager.getRenderType(state));
             for (Direction direction : new Direction[]{Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, null}) {
                 // int SNOW_FLAG = 1 << 30;
-
+                SingleThreadedRandomSource randomSource = new SingleThreadedRandomSource(42L);
                 for (BakedQuad quad :
                         ExtraModelManager.cancelTop(context, model, ClientCon.getUseLevel(),
                                 state, BlockPos.ZERO, direction,
-                                ClientCon.getUseLevel().getRandom(), 42L,
-                                model.getQuads(state, direction, new SingleThreadedRandomSource(42L)))) {
+                                randomSource, 42L,
+                                model.getQuads(state, direction, randomSource))) {
                     (layer == RenderType.translucent() ? translucentVC : opaqueVC)
                             .quad(quad, state.is(BlockTags.LEAVES), layer);
                 }
