@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({Mapper.class})
 @ConditionalMixin(value = "voxy", version = "0.2.14-alpha")
@@ -39,5 +41,10 @@ public abstract class MixinMapping {
     private <K> K eclipticseasons$getBlockStateFromBlockId_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
         if (VoxyTool.isVirtualIceId(index)) return (K) ECLIPTICSEASONS_VIRTUAL_ICE;
         return original.call(instance, VoxyTool.fixId((Mapper) (Object) this, index));
+    }
+
+    @Inject(method = "close", at = @At("HEAD"))
+    private void eclipticseasons$close(CallbackInfo ci) {
+        VoxyTool.BIOME_ID_MAP.clear();
     }
 }
