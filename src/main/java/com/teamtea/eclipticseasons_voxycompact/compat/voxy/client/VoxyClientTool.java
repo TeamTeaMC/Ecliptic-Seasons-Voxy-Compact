@@ -2,7 +2,6 @@ package com.teamtea.eclipticseasons_voxycompact.compat.voxy.client;
 
 import com.teamtea.eclipticseasons.client.core.ExtraModelManager;
 import com.teamtea.eclipticseasons.client.core.ExtraRendererContext;
-import com.teamtea.eclipticseasons.client.model.bakequad.BakedQuadRetextured;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
 import com.teamtea.eclipticseasons.common.core.map.MapChecker;
 import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
@@ -34,9 +33,9 @@ public class VoxyClientTool {
         ClientLevel level = Minecraft.getInstance().level;
         if (level == null || level.getGameTime() % (20 * 15) != 0) return;
 
-        if (ClientCon.getAgent().isSnowChange()) {
+        if (ClientCon.getAgent().isSnowChange()
+                && VoxyGeometryRefreshManager.refreshAll()) {
             ClientCon.getAgent().setSnowChange(false);
-            VoxyGeometryRefreshManager.refreshAll();
         }
     }
 
@@ -58,8 +57,8 @@ public class VoxyClientTool {
             RenderType type = state.getBlock() instanceof LeavesBlock ?
                     layer :
                     ExtraModelManager.getRenderType(state);
-            SingleThreadedRandomSource randomSource = new SingleThreadedRandomSource(42L);
             for (Direction direction : new Direction[]{Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, null}) {
+                SingleThreadedRandomSource randomSource = new SingleThreadedRandomSource(42L);
                 for (BakedQuad quad :
                         ExtraModelManager.cancelTop(context, model, ClientCon.getUseLevel(),
                                 state, BlockPos.ZERO, direction,
