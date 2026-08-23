@@ -1,11 +1,15 @@
-package com.teamtea.eclipticseasons_voxycompact.compat.voxy;
+package com.teamtea.eclipticseasons_voxycompact.compat.voxy.client;
 
 import com.teamtea.eclipticseasons.client.core.ExtraModelManager;
 import com.teamtea.eclipticseasons.client.core.ExtraRendererContext;
+import com.teamtea.eclipticseasons.client.model.bakequad.BakedQuadRetextured;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
 import com.teamtea.eclipticseasons.common.core.map.MapChecker;
+import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
+import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
@@ -17,9 +21,26 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VoxyClientTool {
 
-    public static void renderToStream(BlockState state, RenderType renderType, ReuseVertexConsumer opaqueVC, ReuseVertexConsumer translucentVC) {
+    public static void forceReloadAll() {
+        if (!VoxyTool.isVoxyTest()
+                || !ClientCon.getAgent().isChange()
+                || !CompatModule.CommonConfig.voxyLODAutoReload.get()) return;
+
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null || level.getGameTime() % (20 * 15) != 0) return;
+
+        if (ClientCon.getAgent().isSnowChange()) {
+            ClientCon.getAgent().setSnowChange(false);
+            VoxyGeometryRefreshManager.refreshAll();
+        }
+    }
+
+    public static void renderToStream(BlockState state, RenderType layer, ReuseVertexConsumer translucentVC, ReuseVertexConsumer opaqueVC) {
         if (!VoxyTool.isVoxyTest()) return;
 
         if (state.getRenderShape() != RenderShape.INVISIBLE) {
@@ -34,21 +55,21 @@ public class VoxyClientTool {
                     .setOriginalModel(Minecraft.getInstance().getModelManager().getBlockModelShaper().getBlockModel(state))
             ;
 
-            RenderType layer = (state.getBlock() instanceof LeavesBlock ?
-                    renderType :
-                    ExtraModelManager.getRenderType(state));
+            RenderType type = state.getBlock() instanceof LeavesBlock ?
+                    layer :
+                    ExtraModelManager.getRenderType(state);
+            SingleThreadedRandomSource randomSource = new SingleThreadedRandomSource(42L);
             for (Direction direction : new Direction[]{Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, null}) {
-                // int SNOW_FLAG = 1 << 30;
-                SingleThreadedRandomSource randomSource = new SingleThreadedRandomSource(42L);
                 for (BakedQuad quad :
                         ExtraModelManager.cancelTop(context, model, ClientCon.getUseLevel(),
                                 state, BlockPos.ZERO, direction,
                                 randomSource, 42L,
                                 model.getQuads(state, direction, randomSource))) {
-                    (layer == RenderType.translucent() ? translucentVC : opaqueVC)
-                            .quad(quad, state.is(BlockTags.LEAVES), layer);
+                    (type == RenderType.translucent() ? translucentVC : opaqueVC).quad(quad, state.is(BlockTags.LEAVES), layer);
                 }
             }
         }
     }
+
+
 }

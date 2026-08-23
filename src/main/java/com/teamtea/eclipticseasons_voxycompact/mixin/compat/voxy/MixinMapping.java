@@ -2,22 +2,37 @@ package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.teamtea.eclipticseasons.common.mixin.condition.ConditionalMixin;
+import com.teamtea.eclipticseasons.common.registry.BlockRegistry;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
+import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import me.cortex.voxy.common.world.other.Mapper;
+import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin({Mapper.class})
+import java.util.function.BooleanSupplier;
+
+@Mixin(value = Mapper.class, remap = false)
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha")
 public abstract class MixinMapping {
 
+    @Unique
+    private static final Mapper.StateEntry ECLIPTICSEASONS_VIRTUAL_ICE = new Mapper.StateEntry(
+            VoxyTool.VIRTUAL_ICE_BLOCK_ID, Blocks.ICE.defaultBlockState()
+    );
 
     @WrapOperation(
             remap = false,
             method = "getBlockStateOpacity(I)I",
             at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectArrayList;get(I)Ljava/lang/Object;")
     )
-    private <K> K es_voxycompact$getBlockStateOpacity_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
+    private <K> K eclipticseasons$getBlockStateOpacity_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
+        if (VoxyTool.isVirtualIceId(index)) return (K) ECLIPTICSEASONS_VIRTUAL_ICE;
         return original.call(instance, VoxyTool.fixId((Mapper) (Object) this, index));
     }
 
@@ -26,7 +41,13 @@ public abstract class MixinMapping {
             method = "getBlockStateFromBlockId",
             at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectArrayList;get(I)Ljava/lang/Object;")
     )
-    private <K> K es_voxycompact$getBlockStateFromBlockId_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
+    private <K> K eclipticseasons$getBlockStateFromBlockId_fixId(ObjectArrayList<K> instance, int index, Operation<K> original) {
+        if (VoxyTool.isVirtualIceId(index)) return (K) ECLIPTICSEASONS_VIRTUAL_ICE;
         return original.call(instance, VoxyTool.fixId((Mapper) (Object) this, index));
+    }
+
+    @Inject(method = "close", at = @At("HEAD"))
+    private void eclipticseasons$close(CallbackInfo ci) {
+        VoxyTool.BIOME_ID_MAP.clear();
     }
 }

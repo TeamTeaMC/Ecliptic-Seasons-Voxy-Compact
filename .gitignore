@@ -28,3 +28,4 @@ repo
 .cache
 
 libs
+zlib
