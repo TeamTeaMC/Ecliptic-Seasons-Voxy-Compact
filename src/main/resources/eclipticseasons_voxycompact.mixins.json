@@ -3,18 +3,19 @@
   "package": "com.teamtea.eclipticseasons_voxycompact.mixin",
   "refmap": "eclipticseasons_voxycompact.refmap.json",
   "mixins": [
-    "compat.voxy.MixinIngestSection",
+  ],
+  "client": [
+    "compat.voxy.MixinAccessorModelFactory",
+    "compat.voxy.MixinAccessorVoxyRenderSystem",
+    "compat.voxy.MixinClientLevel",
+    "compat.voxy.MixinGeometryCache",
     "compat.voxy.MixinMapping",
     "compat.voxy.MixinModelBakerySubsystem",
     "compat.voxy.MixinModelFactory",
-    "compat.voxy.MixinVoxelIngestService",
-    "compat.voxy.MixinWorldConversionFactory",
-    "compat.voxy.MixinWorldImporter",
-    "compat.voxy.MixinWorldUpdater"
-  ],
-  "client": [
-    "compat.voxy.MixinClientLevel",
-    "compat.voxy.MixinModelTextureBakery"
+    "compat.voxy.MixinModelTextureBakery",
+    "compat.voxy.MixinWorldUpdater",
+    "compat.voxy.ModelStoreAccessor",
+    "compat.voxy.ModelFactoryInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

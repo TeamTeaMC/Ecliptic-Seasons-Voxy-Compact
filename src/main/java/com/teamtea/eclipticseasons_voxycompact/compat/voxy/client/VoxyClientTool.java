@@ -1,11 +1,14 @@
-package com.teamtea.eclipticseasons_voxycompact.compat.voxy;
+package com.teamtea.eclipticseasons_voxycompact.compat.voxy.client;
 
 import com.teamtea.eclipticseasons.client.core.ExtraModelManager;
 import com.teamtea.eclipticseasons.client.core.ExtraRendererContext;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
 import com.teamtea.eclipticseasons.common.core.map.MapChecker;
+import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
+import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
@@ -17,9 +20,24 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VoxyClientTool {
+
+    public static void forceReloadAll() {
+        if (!VoxyTool.isVoxyTest()
+                || !ClientCon.getAgent().isChange()
+                || !CompatModule.CommonConfig.voxyLODAutoReload.get()) return;
+
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level == null || level.getGameTime() % (20 * 15) != 0) return;
+
+        if( ClientCon.getAgent().isSnowChange()){
+            ClientCon.getAgent().setSnowChange(false);
+            VoxyGeometryRefreshManager.refreshAll();
+        }
+    }
 
     public static void renderToStream(BlockState state, RenderType layer, ReuseVertexConsumer translucentVC, ReuseVertexConsumer opaqueVC) {
         if (!VoxyTool.isVoxyTest()) return;

@@ -55,7 +55,7 @@ config="${mod_id}.mixins.json"
     modId="voxy"
     type="optional"
     mandatory=false
-    versionRange="[0.2.14-alpha,0.2.17)"
+    versionRange="[0.2.14-alpha,)"
     ordering="NONE"
     side="BOTH"
 

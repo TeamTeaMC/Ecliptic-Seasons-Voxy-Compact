@@ -40,6 +40,20 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven {
+        name = "Sinytra"
+        url = "https://maven.su5ed.dev/releases"
+        content {
+            includeGroup "org.sinytra.forgified-fabric-api"
+        }
+    }
+    maven {
+        name = "CaffeineMC"
+        url "https://maven.caffeinemc.net/releases" // or /snapshots
+//        content {
+//            includeGroup "net.caffeinemc"
+//        }
+    }
 }
 
 base {
@@ -156,8 +170,13 @@ dependencies {
 //    implementation "net.neoforged:neoforge:${neo_version}"
 
     compileOnly("zlib:voxy:0.2.14-alpha_mapped_moj_1.21.1")
+    runtimeOnly("zlib:neo-voxy:0.3.0-mc1.21.1-neoforge-client")
 //    compileOnly("zlib:voxy_slim:1")
-    implementation "curse.maven:ecliptic-seasons-1118306:7956564"
+    implementation "curse.maven:ecliptic-seasons-1118306:8689806"
+
+//    runtimeOnly("net.caffeinemc:sodium-neoforge:0.8.12-alpha.4+mc1.21.1")
+    runtimeOnly("maven.modrinth:sodium:mc1.21.1-0.8.12-alpha.4-neoforge")
+//    runtimeOnly "maven.modrinth:iris:1.8.14-beta.1+1.21.1-neoforge"
 
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly 'org.projectlombok:lombok:1.18.38'

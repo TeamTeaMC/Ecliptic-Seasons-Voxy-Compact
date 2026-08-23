@@ -1,23 +1,22 @@
 package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy;
 
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyClientTool;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.teamtea.eclipticseasons.common.mixin.condition.ConditionalMixin;
+import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelController;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import me.cortex.voxy.client.core.model.bakery.SoftwareModelTextureBakery;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({SoftwareModelTextureBakery.class})
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha")
 public abstract class MixinModelTextureBakery implements IVoxyModelController {
 
     @Shadow
@@ -28,14 +27,15 @@ public abstract class MixinModelTextureBakery implements IVoxyModelController {
     @Final
     private ReuseVertexConsumer opaqueVC;
 
-    @Inject(
+    @ModifyExpressionValue(
             remap = false,
             method = "bakeBlockModel",
-            at = @At(value = "TAIL")
+            at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z")
     )
-    private void eclipticseasons$bakeBlockModel_pre(BlockState state, RenderType layer, CallbackInfo ci, @Share("snowy_model") LocalRef<BakedModel> modelLocalRef) {
-        if (isSnowyBlock())
-            VoxyClientTool.renderToStream(state, layer, this.translucentVC, this.opaqueVC);
+    private boolean eclipticseasons$bakeBlockModel_pre(boolean original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) RenderType layer) {
+        if (!original && isSnowyBlock())
+            VoxyClientTool.renderToStream(state, layer, translucentVC, opaqueVC);
+        return original;
     }
 
 

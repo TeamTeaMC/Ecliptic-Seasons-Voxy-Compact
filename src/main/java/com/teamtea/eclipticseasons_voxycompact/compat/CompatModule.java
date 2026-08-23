@@ -62,7 +62,7 @@ public class CompatModule {
                                 .
                                 Just for test.
                                 .""".strip()
-                        ).define("VoxyLODAutoReload", false);
+                        ).define("VoxyLODAutoReload", true);
 
 
                 voxyReloadWhenSeasonChanged = builder
@@ -71,7 +71,7 @@ public class CompatModule {
                                 .
                                 Just for test.
                                 .""".strip()
-                        ).define("VoxyReloadWhenSeasonChanged", false);
+                        ).define("VoxyReloadWhenSeasonChanged", true);
             }
             builder.pop();
         }
