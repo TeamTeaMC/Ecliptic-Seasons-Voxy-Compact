@@ -12,6 +12,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(EclipticSeasonsVoxyCompact.MODID)
@@ -20,7 +21,7 @@ public class EclipticSeasonsVoxyCompact {
 
     public EclipticSeasonsVoxyCompact(IEventBus modEventBus, ModContainer modContainer) {
         CompatModule.init();
-
+        CompatModule.register(NeoForge.EVENT_BUS, modEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, ESVoxyCompactConfig.COMMON_CONFIG);
 
         if (FMLLoader.getDist() == Dist.CLIENT)

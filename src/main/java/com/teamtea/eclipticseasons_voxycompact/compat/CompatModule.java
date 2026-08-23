@@ -31,7 +31,7 @@ public class CompatModule {
     public static void register(IEventBus gameBus, IEventBus modBus) {
         if (isVoxy() && FMLLoader.getDist() == Dist.CLIENT) {
             try {
-                Class<?> handler = Class.forName("com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyEsHandler");
+                Class<?> handler = Class.forName("com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyEsHandler");
                 gameBus.register(handler.getField("INSTANCE").get(null));
             } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
                 throw new RuntimeException(e);
