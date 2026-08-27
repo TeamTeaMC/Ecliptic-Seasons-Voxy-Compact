@@ -213,7 +213,7 @@ dependencies {
 //        jarJar.ranged(it, "[0.4.1,)")
 //    }
 
-    implementation fg.deobf("curse.maven:ecliptic-seasons-1118306:8689790")
+    implementation annotationProcessor(fg.deobf("curse.maven:ecliptic-seasons-1118306:8736103"))
 
     compileOnly fg.deobf("libs:voxy:0.2.14-alpha-mapped-srg-1.20.1")
     runtimeOnly fg.deobf("libs:neo-voxy:0.3.1-forge-client")

@@ -41,37 +41,25 @@ public class CompatModule {
 
 
     public static class CommonConfig {
-        public static ForgeConfigSpec.BooleanValue voxyTest;
-        public static ForgeConfigSpec.BooleanValue voxyLODAutoReload;
-        public static ForgeConfigSpec.BooleanValue voxyReloadWhenSeasonChanged;
+        public static ForgeConfigSpec.BooleanValue voxyCompatibility;
+        public static ForgeConfigSpec.BooleanValue voxyAutoRefresh;
+        public static ForgeConfigSpec.BooleanValue voxyRefreshOnSolarTermChange;
 
         public static void load(ForgeConfigSpec.Builder builder) {
             builder.push("Compat");
             if (isVoxy()) {
-                voxyTest = builder
+                voxyCompatibility = builder
                         .worldRestart()
-                        .comment("""
-                                .
-                                Just for test.
-                                .""".strip()
-                        ).define("VoxyTest", true);
+                        .comment("Enables compatibility with Voxy.")
+                        .define("VoxyCompatibility", true);
 
-                voxyLODAutoReload = builder
-                        //.worldRestart()
-                        .comment("""
-                                .
-                                Just for test.
-                                .""".strip()
-                        ).define("VoxyLODAutoReload", true);
+                voxyAutoRefresh = builder
+                        .comment("Automatically updates distant LODs when snow coverage changes.")
+                        .define("VoxyAutoRefresh", true);
 
-
-                voxyReloadWhenSeasonChanged = builder
-                        //.worldRestart()
-                        .comment("""
-                                .
-                                Just for test.
-                                .""".strip()
-                        ).define("VoxyReloadWhenSeasonChanged", true);
+                voxyRefreshOnSolarTermChange = builder
+                        .comment("Updates seasonal LODs when the solar term changes.")
+                        .define("VoxyRefreshOnSolarTermChange", true);
             }
             builder.pop();
         }

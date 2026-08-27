@@ -13,14 +13,12 @@ public class VoxyEsHandler {
 
     @SubscribeEvent
     public void onSolarTermChangeEvent(SolarTermChangeEvent event) {
-        if (event.getLevel() != Minecraft.getInstance().level
-                // || !CompatModule.CommonConfig.voxyLODAutoReload.get()
-                || !CompatModule.CommonConfig.voxyReloadWhenSeasonChanged.get()) return;
+        if (event.getLevel() != Minecraft.getInstance().level) return;
 
         // Auto reload consumes termChange/snowChange together every 15 seconds.
         // if (CompatModule.CommonConfig.voxyLODAutoReload.get())
         //     VoxyGeometryRefreshManager.refreshAll();
-        if (CompatModule.CommonConfig.voxyReloadWhenSeasonChanged.get())
+        if (CompatModule.CommonConfig.voxyRefreshOnSolarTermChange.get())
             VoxyTintManager.refreshAll();
     }
 

@@ -8,6 +8,7 @@ import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelCont
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import me.cortex.voxy.client.core.model.bakery.SoftwareModelTextureBakery;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,8 +33,8 @@ public abstract class MixinModelTextureBakery implements IVoxyModelController {
             method = "bakeBlockModel",
             at = @At(value = "INVOKE", target = "Ljava/util/Iterator;hasNext()Z")
     )
-    private boolean eclipticseasons$bakeBlockModel_pre(boolean original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) RenderType layer) {
-        if (!original && isSnowyBlock())
+    private boolean eclipticseasons$bakeBlockModel_pre(boolean original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) RenderType layer, @Local Direction direction) {
+        if (!original && direction == null && isSnowyBlock())
             VoxyClientTool.renderToStream(state, layer, translucentVC, opaqueVC);
         return original;
     }
