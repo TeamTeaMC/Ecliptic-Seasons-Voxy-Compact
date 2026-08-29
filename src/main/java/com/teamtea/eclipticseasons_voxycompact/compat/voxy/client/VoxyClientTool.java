@@ -65,11 +65,15 @@ public class VoxyClientTool {
                                 randomSource, 42L,
                                 model.getQuads(state, direction, randomSource),
                                 List.of())) {
-                    (type == RenderType.translucent() ? translucentVC : opaqueVC).quad(quad, state.is(BlockTags.LEAVES), layer);
+                    ReuseVertexConsumer consumer = type == RenderType.translucent() ? translucentVC : opaqueVC;
+                    if (CompatModule.isRoxyTest()) {
+                        consumer.quad(quad, (true ? 3 : 2) | (quad.isTinted() ? 4 : 0));
+                    } else {
+                        consumer.quad(quad, state.is(BlockTags.LEAVES), layer);
+                    }
                 }
             }
         }
     }
-
 
 }

@@ -167,7 +167,7 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
         for (Pair<Integer, BlockState> entry : modelsRequiringBiomeColours) {
             BlockState state = entry.right();
             BlockColor tintSources =
-                    ModelFactoryInvoker.eclipticseasons$getTintSources(state);
+                    ModelFactoryInvoker.eclipticseasons$getTintSources(state.getBlock());
 
             for (Biome biome : biomes) {
                 int colour = 0xFFFFFFFF;

@@ -2,6 +2,7 @@ package com.teamtea.eclipticseasons_voxycompact.compat;
 
 
 import com.teamtea.eclipticseasons.compat.Platform;
+import lombok.Getter;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.loading.FMLLoader;
@@ -10,8 +11,11 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class CompatModule {
     private static boolean voxy = false;
+
+    @Getter
+    private static boolean roxyTest = false;
     //@Getter
-    //private static boolean voxyTest = false;
+    // private static boolean voxyTest = false;
 
 
     public static boolean isVoxy() {
@@ -23,6 +27,7 @@ public class CompatModule {
      **/
     public static void init() {
         voxy = Platform.isModLoaded("voxy");
+        roxyTest = Platform.isVersionSatisfied("voxy", "[0.2.16-beta]");
     }
 
     /**
