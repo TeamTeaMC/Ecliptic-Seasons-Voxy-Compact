@@ -1,13 +1,11 @@
 package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import com.teamtea.eclipticseasons.common.mixin.condition.ConditionalMixin;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelController;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import me.cortex.voxy.client.core.model.bakery.SoftwareModelTextureBakery;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
