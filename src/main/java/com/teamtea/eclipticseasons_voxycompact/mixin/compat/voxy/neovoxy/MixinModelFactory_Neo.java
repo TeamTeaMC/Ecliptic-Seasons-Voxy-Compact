@@ -1,19 +1,18 @@
-package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy;
+package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy.neovoxy;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import com.teamtea.eclipticseasons.EclipticSeasons;
 import com.teamtea.eclipticseasons.common.mixin.condition.ConditionalMixin;
-import com.teamtea.eclipticseasons.common.mixin.condition.ModCondition;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.IVoxyModelFactory;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelController;
+import com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy.ModelStoreAccessor;
 import me.cortex.voxy.client.core.gl.GlBuffer;
 import me.cortex.voxy.client.core.model.ModelFactory;
 import me.cortex.voxy.client.core.model.ModelStore;
@@ -22,14 +21,9 @@ import me.cortex.voxy.client.core.rendering.util.UploadStream;
 import me.cortex.voxy.common.util.MemoryBuffer;
 import me.cortex.voxy.common.util.Pair;
 import me.cortex.voxy.common.world.other.Mapper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.lwjgl.system.MemoryUtil;
 import org.spongepowered.asm.mixin.Final;
@@ -45,10 +39,9 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 @Mixin({ModelFactory.class})
-@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", noneOf = {@ModCondition(value = "voxy", name = "neo-voxy")})
-public abstract class MixinModelFactory implements IVoxyModelFactory {
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", name = "neo-voxy")
+public abstract class MixinModelFactory_Neo implements IVoxyModelFactory {
 
     @Shadow(remap = false)
     @Final
@@ -143,6 +136,9 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
     @Final
     private ModelStore storage;
 
+    @Shadow(remap = false)
+    protected abstract BlockColor getColourProvider(BlockState block);
+
     @Unique
     private volatile boolean eclipticseasons$refreshTintRequested;
 
@@ -193,13 +189,13 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
         for (Pair<Integer, BlockState> entry : modelsRequiringBiomeColours) {
             BlockState state = entry.right();
             BlockColor tintSources =
-                    ModelFactoryInvoker.eclipticseasons$getTintSources(state.getBlock());
+                    getColourProvider(state);
 
             for (Biome biome : biomes) {
                 int colour = 0xFFFFFFFF;
 
                 if (biome != null && tintSources != null) {
-                    colour = ModelFactoryInvoker.eclipticseasons$captureColourConstant(
+                    colour = ModelFactoryInvoker_Neo.eclipticseasons$captureColourConstant(
                             tintSources, state, biome
                     ) | 0xFF000000;
                 }
@@ -218,7 +214,7 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
     /*
      * processUploads() 由渲染线程调用，因此 OpenGL 上传放在这里。
      */
-    @Inject(remap = false,method = "processUploads", at = @At("HEAD"))
+    @Inject(remap = false, method = "processUploads", at = @At("HEAD"))
     private void eclipticseasons$uploadTintTable(CallbackInfo ci) {
         MemoryBuffer upload = eclipticseasons$pendingTintUpload.getAndSet(null);
         if (upload == null) return;
@@ -231,7 +227,7 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
         upload.free();
     }
 
-    @Inject(remap = false,method = "free", at = @At("HEAD"))
+    @Inject(remap = false, method = "free", at = @At("HEAD"))
     private void eclipticseasons$freePendingTintUpload(CallbackInfo ci) {
         MemoryBuffer upload = eclipticseasons$pendingTintUpload.getAndSet(null);
 

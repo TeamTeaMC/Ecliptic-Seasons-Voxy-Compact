@@ -10,6 +10,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @ConditionalMixin(value = "voxy", version = "0.2.14-alpha")
 public interface ModelStoreAccessor {
 
-    @Accessor("modelColourBuffer")
+    @Accessor(remap = false, value = "modelColourBuffer")
     GlBuffer eclipticseasons$getModelColourBuffer();
 }

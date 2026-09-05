@@ -33,6 +33,8 @@ public class CompatModule {
             try {
                 Class<?> handler = Class.forName("com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyEsHandler");
                 gameBus.register(handler.getField("INSTANCE").get(null));
+                handler = Class.forName("com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyEsModHandler");
+                modBus.register(handler.getField("INSTANCE").get(null));
             } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
                 e.printStackTrace();
             }
@@ -44,6 +46,7 @@ public class CompatModule {
         public static ForgeConfigSpec.BooleanValue voxyCompatibility;
         public static ForgeConfigSpec.BooleanValue voxyAutoRefresh;
         public static ForgeConfigSpec.BooleanValue voxyRefreshOnSolarTermChange;
+        public static ForgeConfigSpec.BooleanValue voxyRefreshSeasonalModels;
 
         public static void load(ForgeConfigSpec.Builder builder) {
             builder.push("Compat");
@@ -60,6 +63,10 @@ public class CompatModule {
                 voxyRefreshOnSolarTermChange = builder
                         .comment("Updates seasonal LODs when the solar term changes.")
                         .define("VoxyRefreshOnSolarTermChange", true);
+
+                voxyRefreshSeasonalModels = builder
+                        .comment("Rebuilds visible Voxy LOD geometry when seasonal block models may change.")
+                        .define("VoxyRefreshSeasonalModels", true);
             }
             builder.pop();
         }
