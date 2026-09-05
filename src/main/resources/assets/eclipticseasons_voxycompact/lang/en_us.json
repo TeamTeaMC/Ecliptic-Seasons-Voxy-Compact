@@ -15,5 +15,7 @@
   "eclipticseasons_voxycompact.configuration.VoxyAutoRefresh": "Automatically Refresh Voxy LODs",
   "eclipticseasons_voxycompact.configuration.VoxyAutoRefresh.tooltip": "Automatically refreshes visible Voxy LOD geometry when seasonal snow coverage changes.",
   "eclipticseasons_voxycompact.configuration.VoxyRefreshOnSolarTermChange": "Refresh Voxy LODs on Solar Term Change",
-  "eclipticseasons_voxycompact.configuration.VoxyRefreshOnSolarTermChange.tooltip": "Refreshes seasonal appearances in Voxy LODs when the current solar term changes."
+  "eclipticseasons_voxycompact.configuration.VoxyRefreshOnSolarTermChange.tooltip": "Refreshes seasonal appearances in Voxy LODs when the current solar term changes.",
+  "eclipticseasons.configuration.VoxyRefreshSeasonalModels": "Refresh Voxy Seasonal Models",
+  "eclipticseasons.configuration.VoxyRefreshSeasonalModels.tooltip": "Rebuilds visible Voxy LOD geometry when seasonal block models may change."
 }
