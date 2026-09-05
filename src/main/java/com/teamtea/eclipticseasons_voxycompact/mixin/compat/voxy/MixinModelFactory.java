@@ -47,7 +47,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 
 @Mixin({ModelFactory.class})
-@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", noneOf = {@ModCondition(value = "voxy", name = "neo-voxy")})
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha")
 public abstract class MixinModelFactory implements IVoxyModelFactory {
 
     @Shadow(remap = false)

@@ -16,9 +16,7 @@
     "compat.voxy.MixinWorldUpdater",
     "compat.voxy.ModelFactoryInvoker",
     "compat.voxy.ModelStoreAccessor",
-    "compat.voxy.neovoxy.MixinModelFactory_Neo_Patch",
-    "compat.voxy.neovoxy.MixinModelFactory_Neo",
-    "compat.voxy.neovoxy.ModelFactoryInvoker_Neo"
+    "compat.voxy.neovoxy.MixinModelFactory_Neo_Patch"
   ],
   "injectors": {
     "defaultRequire": 1

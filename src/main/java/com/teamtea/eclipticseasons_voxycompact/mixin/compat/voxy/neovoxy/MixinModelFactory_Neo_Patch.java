@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = ModelFactory.class, remap = false)
-@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", name = "neo-voxy")
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", name = "Neo Voxy")
 public abstract class MixinModelFactory_Neo_Patch {
     @Shadow
     @Final
@@ -21,7 +21,7 @@ public abstract class MixinModelFactory_Neo_Patch {
     @ModifyExpressionValue(
             remap = false,
             method = "processTextureBakeResult",
-            at = @At(value = "INVOKE", target = "Lme/cortex/voxy/client/core/model/ModelFactory;getColourProvider(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/color/block/BlockColor;")
+            at = @At(value = "INVOKE", target = "Lme/cortex/voxy/client/core/model/ModelFactory;getColourProvider(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/client/color/block/BlockColor;")
     )
     private BlockColor eclipticseasons$processTextureBakeResult_fix_snow_leaves(BlockColor original) {
         if (bakery2 instanceof IVoxyModelController modelController && modelController.isSnowyBlock()) {

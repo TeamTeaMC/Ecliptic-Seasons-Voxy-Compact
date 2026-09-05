@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.List;
 
 @Mixin(ModelFactory.class)
-@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", noneOf = {@ModCondition(value = "voxy", name = "neo-voxy")})
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha")
 public interface ModelFactoryInvoker {
 
     @Invoker(remap = false, value = "getColourProvider")
