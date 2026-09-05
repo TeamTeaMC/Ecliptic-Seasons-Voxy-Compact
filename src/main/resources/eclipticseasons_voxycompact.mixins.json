@@ -12,12 +12,14 @@
     "compat.voxy.MixinMapping",
     "compat.voxy.MixinModelBakerySubsystem",
     "compat.voxy.MixinModelFactory",
-    "compat.voxy.MixinModelFactory_Neo",
     "compat.voxy.MixinModelTextureBakery",
-    "compat.voxy.MixinModelTextureBakery_Roxy",
     "compat.voxy.MixinWorldUpdater",
     "compat.voxy.ModelFactoryInvoker",
-    "compat.voxy.ModelStoreAccessor"
+    "compat.voxy.ModelStoreAccessor",
+    "compat.voxy.neovoxy.MixinModelFactory_Neo_Patch",
+    "compat.voxy.neovoxy.MixinModelFactory_Neo",
+    "compat.voxy.neovoxy.ModelFactoryInvoker_Neo",
+    "compat.voxy.roxy.MixinModelTextureBakery_Roxy"
   ],
   "injectors": {
     "defaultRequire": 1

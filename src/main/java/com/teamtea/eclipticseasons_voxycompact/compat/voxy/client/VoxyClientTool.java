@@ -1,5 +1,6 @@
 package com.teamtea.eclipticseasons_voxycompact.compat.voxy.client;
 
+import com.teamtea.eclipticseasons.client.color.season.FoliageColorSource;
 import com.teamtea.eclipticseasons.client.core.ExtraModelManager;
 import com.teamtea.eclipticseasons.client.core.ExtraRendererContext;
 import com.teamtea.eclipticseasons.client.util.ClientCon;
@@ -8,6 +9,7 @@ import com.teamtea.eclipticseasons_voxycompact.compat.CompatModule;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.VoxyTool;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -74,6 +76,14 @@ public class VoxyClientTool {
                 }
             }
         }
+    }
+
+
+    public static boolean isExtendBiomeDependentColour(BlockState state, BlockColor tintSources) {
+        if (tintSources instanceof FoliageColorSource
+                || tintSources instanceof FoliageColorSource.Impl)
+            return true;
+        return tintSources != null && state.is(BlockTags.LEAVES);
     }
 
 }

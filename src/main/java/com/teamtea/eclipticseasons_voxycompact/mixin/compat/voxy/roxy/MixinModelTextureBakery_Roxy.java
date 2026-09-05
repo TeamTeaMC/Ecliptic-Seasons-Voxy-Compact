@@ -1,4 +1,4 @@
-package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy;
+package com.teamtea.eclipticseasons_voxycompact.mixin.compat.voxy.roxy;
 
 import com.teamtea.eclipticseasons.common.mixin.condition.ConditionalMixin;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool;
