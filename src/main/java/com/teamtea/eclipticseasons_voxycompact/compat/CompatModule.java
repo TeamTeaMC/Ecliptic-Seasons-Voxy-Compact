@@ -27,7 +27,7 @@ public class CompatModule {
      **/
     public static void init() {
         voxy = Platform.isModLoaded("voxy");
-        roxyTest = Platform.isVersionSatisfied("voxy", "[0.2.16-beta]");
+        roxyTest = Platform.isModLoaded("roxy");
     }
 
     /**

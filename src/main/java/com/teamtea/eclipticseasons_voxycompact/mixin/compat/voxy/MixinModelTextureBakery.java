@@ -8,6 +8,7 @@ import com.teamtea.eclipticseasons.api.data.client.model.ModelTester;
 import com.teamtea.eclipticseasons.client.core.ExtraModelManager;
 import com.teamtea.eclipticseasons.client.lod.SeasonalModelEntry;
 import com.teamtea.eclipticseasons.common.mixin.condition.ConditionalMixin;
+import com.teamtea.eclipticseasons.common.mixin.condition.ModCondition;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool;
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelController;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin({SoftwareModelTextureBakery.class})
-@ConditionalMixin(value = "voxy", version = "[0.2.14-alpha,0.2.16-beta),[0.3.0,)")
+@ConditionalMixin(value = "voxy", version = "0.2.14-alpha", noneOf = {@ModCondition(value = "roxy")})
 public abstract class MixinModelTextureBakery implements IVoxyModelController {
 
     @Shadow
