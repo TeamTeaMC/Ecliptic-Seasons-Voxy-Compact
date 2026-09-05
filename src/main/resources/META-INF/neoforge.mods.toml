@@ -54,7 +54,7 @@ config="${mod_id}.mixins.json"
     modId="eclipticseasons"
     type="required"
     mandatory=false
-    versionRange="[0.14.99-beta-2,)"
+    versionRange="[0.15.0-rc-3,)"
     ordering="NONE"
     side="BOTH"
 

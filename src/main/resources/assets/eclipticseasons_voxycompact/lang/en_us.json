@@ -1,5 +1,19 @@
 {
-  "EclipticSeasonsVoxyCompact.configuration.VoxyTest": "Voxy Compatibility Test",
-  "EclipticSeasonsVoxyCompact.configuration.VoxyLODAutoReload": "Voxy LOD Auto Reload",
-  "EclipticSeasonsVoxyCompact.configuration.VoxyReloadWhenSeasonChanged": "Voxy Cache Reload When Season Changed"
+  "eclipticseasons_voxycompact.options.title": "Voxy Compatibility",
+  "eclipticseasons_voxycompact.options.search": "Search configurations...",
+  "eclipticseasons_voxycompact.options.search.no_result": "No matching configurations",
+  "eclipticseasons_voxycompact.options.classic_screen": "Classic Screen",
+  "eclipticseasons_voxycompact.options.voxy": "Voxy",
+  "eclipticseasons_voxycompact.options.voxy.tooltip": "Configure seasonal rendering support for Voxy.",
+  "eclipticseasons_voxycompact.options.all": "All",
+  "eclipticseasons_voxycompact.options.all.tooltip": "Displays every available configuration.",
+  "eclipticseasons_voxycompact.options.general": "General",
+  "eclipticseasons_voxycompact.options.voxy_compact": "Voxy",
+  "eclipticseasons_voxycompact.options.voxy_compact.tooltip": "Configure the integration between Ecliptic Seasons and Voxy.",
+  "eclipticseasons_voxycompact.configuration.VoxyCompatibility": "Voxy Compatibility",
+  "eclipticseasons_voxycompact.configuration.VoxyCompatibility.tooltip": "Enables seasonal rendering integration between Ecliptic Seasons and Voxy.",
+  "eclipticseasons_voxycompact.configuration.VoxyAutoRefresh": "Automatically Refresh Voxy LODs",
+  "eclipticseasons_voxycompact.configuration.VoxyAutoRefresh.tooltip": "Automatically refreshes visible Voxy LOD geometry when seasonal snow coverage changes.",
+  "eclipticseasons_voxycompact.configuration.VoxyRefreshOnSolarTermChange": "Refresh Voxy LODs on Solar Term Change",
+  "eclipticseasons_voxycompact.configuration.VoxyRefreshOnSolarTermChange.tooltip": "Refreshes seasonal appearances in Voxy LODs when the current solar term changes."
 }
