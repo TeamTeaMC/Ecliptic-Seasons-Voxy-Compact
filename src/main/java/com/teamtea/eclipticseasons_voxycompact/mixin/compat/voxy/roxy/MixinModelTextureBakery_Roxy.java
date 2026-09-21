@@ -11,10 +11,14 @@ import com.teamtea.eclipticseasons_voxycompact.compat.voxy.client.VoxyClientTool
 import com.teamtea.eclipticseasons_voxycompact.compat.voxy.helper.IVoxyModelController;
 import me.cortex.voxy.client.core.model.bakery.ReuseVertexConsumer;
 import me.cortex.voxy.client.core.model.bakery.SoftwareModelTextureBakery;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
 import net.neoforged.neoforge.common.util.ConcatenatedListView;
@@ -27,7 +31,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 @Mixin({SoftwareModelTextureBakery.class})
 @ConditionalMixin(allOf = {
@@ -39,6 +45,30 @@ public abstract class MixinModelTextureBakery_Roxy implements IVoxyModelControll
     @Shadow(remap = false)
     @Final
     private ReuseVertexConsumer vc;
+
+    // Mixins targeting RoxyModelTintBridge do not take effect, possibly because the
+    // bridge is loaded through Roxy's patching mechanism. Apply the compatibility
+    // fix at the call site and deliberately rebuild the flag from the original metadata.
+    @ModifyExpressionValue(
+            method = "bakeBlockModel",
+            at = @At(value = "INVOKE", target = "Lnet/rasanovum/roxy/bridge/RoxyModelTintBridge;metadata(Ljava/lang/Object;Ljava/lang/Object;I)I")
+    )
+    private int eclipticseasons$roxy_applySeasonalTintMetadata(
+            int original,
+            @Local(argsOnly = true) BlockState state,
+            @Local(ordinal = 0) int meta
+    ) {
+        try {
+            Field field = BlockColors.class.getDeclaredField("blockColors");
+            field.setAccessible(true);
+            @SuppressWarnings("unchecked")
+            Map<Block, BlockColor> blockColors = (Map<Block, BlockColor>) field.get(Minecraft.getInstance().getBlockColors());
+            return VoxyClientTool.isExtendBiomeDependentColour(state, blockColors.get(state.getBlock())) ?
+                    meta | 4 : original;
+        } catch (NoSuchFieldException | IllegalAccessException ignored) {
+        }
+        return original;
+    }
 
     @ModifyExpressionValue(
             method = "bakeBlockModel",

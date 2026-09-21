@@ -171,6 +171,7 @@ dependencies {
 
     compileOnly("zlib:voxy:0.2.14-alpha_mapped_moj_1.21.1")
 //    compileOnly("zlib:roxy-patched-voxy:0905")
+    compileOnly "curse.maven:roxy-1626949:8899498"
     runtimeOnly("zlib:neo-voxy:0.3.0-mc1.21.1-neoforge-client")
 //    compileOnly("zlib:voxy_slim:1")
     implementation annotationProcessor ("curse.maven:ecliptic-seasons-1118306:8798533")

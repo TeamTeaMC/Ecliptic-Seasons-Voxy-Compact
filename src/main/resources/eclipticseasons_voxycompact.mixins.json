@@ -16,10 +16,11 @@
     "compat.voxy.MixinWorldUpdater",
     "compat.voxy.ModelFactoryInvoker",
     "compat.voxy.ModelStoreAccessor",
-    "compat.voxy.neovoxy.MixinModelFactory_Neo_Patch",
     "compat.voxy.neovoxy.MixinModelFactory_Neo",
+    "compat.voxy.neovoxy.MixinModelFactory_Neo_Patch",
     "compat.voxy.neovoxy.ModelFactoryInvoker_Neo",
-    "compat.voxy.roxy.MixinModelTextureBakery_Roxy"
+    "compat.voxy.roxy.MixinModelTextureBakery_Roxy",
+    "compat.voxy.roxy.MixinRoxyModelTintBridge"
   ],
   "injectors": {
     "defaultRequire": 1
