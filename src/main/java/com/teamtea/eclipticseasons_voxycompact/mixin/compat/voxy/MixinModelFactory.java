@@ -78,7 +78,7 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
             at = @At("RETURN")
     )
     private static boolean eclipticseasons$markSeasonalFoliageDynamic(boolean original, BlockColor colorProvider, BlockState state) {
-        return original | VoxyClientTool.isExtendBiomeDependentColour(state, colorProvider);
+        return original || VoxyClientTool.isExtendBiomeDependentColour(state, colorProvider);
     }
 
 
