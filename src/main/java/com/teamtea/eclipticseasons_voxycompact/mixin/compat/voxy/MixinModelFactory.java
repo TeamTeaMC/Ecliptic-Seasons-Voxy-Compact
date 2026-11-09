@@ -202,8 +202,8 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
                     colour = ModelFactoryInvoker.eclipticseasons$captureColourConstant(
                             tintSources, state, biome
                     ) | 0xFF000000;
-                    if(colour==0xFFFFFFFF) {
-                        colour=tintSources.getColor(state,null,null,0);
+                    if (colour == 0xFFFFFFFF) {
+                        colour = tintSources.getColor(state, null, null, 0);
                     }
                 }
 
@@ -221,7 +221,7 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
     /*
      * processUploads() 由渲染线程调用，因此 OpenGL 上传放在这里。
      */
-    @Inject(remap = false,method = "processUploads", at = @At("HEAD"))
+    @Inject(remap = false, method = "processUploads", at = @At("HEAD"))
     private void eclipticseasons$uploadTintTable(CallbackInfo ci) {
         MemoryBuffer upload = eclipticseasons$pendingTintUpload.getAndSet(null);
         if (upload == null) return;
@@ -234,7 +234,7 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
         upload.free();
     }
 
-    @Inject(remap = false,method = "free", at = @At("HEAD"))
+    @Inject(remap = false, method = "free", at = @At("HEAD"))
     private void eclipticseasons$freePendingTintUpload(CallbackInfo ci) {
         MemoryBuffer upload = eclipticseasons$pendingTintUpload.getAndSet(null);
 
