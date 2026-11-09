@@ -196,6 +196,9 @@ public abstract class MixinModelFactory implements IVoxyModelFactory {
                             tintSources, state, biome
                     ) | 0xFF000000;
                 }
+                if(colour==0xFFFFFFFF) {
+                    colour=tintSources.getColor(state,null,null,0);
+                }
 
                 MemoryUtil.memPutInt(pointer, colour);
                 pointer += Integer.BYTES;
